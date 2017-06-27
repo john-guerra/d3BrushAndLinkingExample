@@ -37,6 +37,11 @@ d3.csv("data/Lekagul_slice.csv",
     csData.gateNames = csData.dimGateName.group();
 
 
+    chartTimeline.onBrushed(function (selected) {
+      csData.dimTime.filter(selected);
+      update();
+    });
+
     barChartCar.onMouseOver(function (d) {
       csData.dimCarType.filter(d.key);
       update();
