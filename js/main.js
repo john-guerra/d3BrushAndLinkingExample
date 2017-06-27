@@ -46,9 +46,9 @@ d3.csv("data/Lekagul_slice.csv",
     d3.select("#gates")
       .datum(csData.gateNames.all())
       .call(barChartGate)
-      .select(".x.axis")
+      .select(".x.axis") //Adjusting the tick labels after drawn
       .selectAll(".tick text")
-      .attr("transform", "rotate(-45)");
+      .attr("transform", "translate(-8,-1) rotate(-45)");
 
   }
 );
