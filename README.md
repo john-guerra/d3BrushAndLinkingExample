@@ -1,4 +1,5 @@
-# d3BrushAndLinkingExample
+# D3 + Crossfilter Brush and Linking Tutorial
+
 A step by step tutorial on how to do brushing and linking on d3
 
 D3 Brush and Linking Tutorial
