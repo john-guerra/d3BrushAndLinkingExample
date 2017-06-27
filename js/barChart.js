@@ -10,7 +10,9 @@ function barChart() {
     xValue = function(d) { return d[0]; },
     yValue = function(d) { return d[1]; },
     xScale = d3.scaleBand().padding(0.1),
-    yScale = d3.scaleLinear();
+    yScale = d3.scaleLinear(),
+    onMouseOver = function () { },
+    onMouseOut = function () { };
 
   function chart(selection) {
     selection.each(function (data) {
@@ -63,7 +65,9 @@ function barChart() {
           .attr("x", X)
           .attr("y", Y)
           .attr("width", xScale.bandwidth())
-          .attr("height", function(d) { return innerHeight - Y(d); });
+          .attr("height", function(d) { return innerHeight - Y(d); })
+          .on("mouseover", onMouseOver)
+          .on("mouseout", onMouseOut);
 
       bars.exit().remove();
     });
@@ -109,6 +113,19 @@ function barChart() {
     yValue = _;
     return chart;
   };
+
+  chart.onMouseOver = function(_) {
+    if (!arguments.length) return onMouseOver;
+    onMouseOver = _;
+    return chart;
+  };
+
+  chart.onMouseOut = function(_) {
+    if (!arguments.length) return onMouseOut;
+    onMouseOut = _;
+    return chart;
+  };
+
 
   return chart;
 }

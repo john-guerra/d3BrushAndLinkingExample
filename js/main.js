@@ -4,6 +4,7 @@
 var dateFmt = d3.timeParse("%Y-%m-%d %H:%M:%S");
 
 var chartTimeline = timeSeriesChart()
+  .width(1000)
   .x(function (d) { return d.key;})
   .y(function (d) { return d.value;});
 var barChartGate = barChart()
@@ -35,20 +36,45 @@ d3.csv("data/Lekagul_slice.csv",
     csData.carTypes = csData.dimCarType.group();
     csData.gateNames = csData.dimGateName.group();
 
-    d3.select("#timeline")
-      .datum(csData.timesByHour.all())
-      .call(chartTimeline);
 
-    d3.select("#carTypes")
-      .datum(csData.carTypes.all())
-      .call(barChartCar);
+    barChartCar.onMouseOver(function (d) {
+      csData.dimCarType.filter(d.key);
+      update();
+    }).onMouseOut(function () {
+      // Clear the filter
+      csData.dimCarType.filterAll();
+      update();
+    });
 
-    d3.select("#gates")
-      .datum(csData.gateNames.all())
-      .call(barChartGate)
-      .select(".x.axis") //Adjusting the tick labels after drawn
-      .selectAll(".tick text")
-      .attr("transform", "translate(-8,-1) rotate(-45)");
+    barChartGate.onMouseOver(function (d) {
+      csData.dimGateName.filter(d.key);
+      update();
+    }).onMouseOut(function () {
+      // Clear the filter
+      csData.dimGateName.filterAll();
+      update();
+    });
+
+    function update() {
+      d3.select("#timeline")
+        .datum(csData.timesByHour.all())
+        .call(chartTimeline);
+
+      d3.select("#carTypes")
+        .datum(csData.carTypes.all())
+        .call(barChartCar);
+
+      d3.select("#gates")
+        .datum(csData.gateNames.all())
+        .call(barChartGate)
+        .select(".x.axis") //Adjusting the tick labels after drawn
+        .selectAll(".tick text")
+        .attr("transform", "translate(-8,-1) rotate(-45)");
+
+    }
+
+    update();
+
 
   }
 );
