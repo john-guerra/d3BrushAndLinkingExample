@@ -24,6 +24,9 @@ function barChart() {
       gEnter.append("g").attr("class", "x axis");
       gEnter.append("g").attr("class", "y axis");
 
+      innerWidth = width - margin.left - margin.right,
+      innerHeight = height - margin.top - margin.bottom,
+
       // Update the outer dimensions.
       svg.merge(svgEnter).attr("width", width)
         .attr("height", height);
@@ -34,16 +37,16 @@ function barChart() {
 
 
       xScale.rangeRound([0, innerWidth])
-        .domain(data.map(function(d) { return d.letter; }));
+        .domain(data.map(xValue));
       yScale.rangeRound([innerHeight, 0])
-        .domain([0, d3.max(data, function(d) { return d.frequency; })]);
+        .domain([0, d3.max(data, yValue)]);
 
       g.select(".x.axis")
           .attr("transform", "translate(0," + innerHeight + ")")
           .call(d3.axisBottom(xScale));
 
       g.select(".y.axis")
-          .call(d3.axisLeft(yScale).ticks(10, "%"))
+          .call(d3.axisLeft(yScale).ticks(10))
         .append("text")
           .attr("transform", "rotate(-90)")
           .attr("y", 6)
