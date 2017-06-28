@@ -1,7 +1,10 @@
 # D3 + Crossfilter Brush and Linking Tutorial
 
 [Demo](http://johnguerra.co/viz/d3BrushAndLinking/)
-![Demo](d3BrushAndLinking.gif)
+[Video](https://www.youtube.com/watch?v=Oz3U38oOcNg)
+![Thumb](d3BrushAndLinking.gif)
+
+
 
 A step by step tutorial on how to do brushing and linking on d3
 
