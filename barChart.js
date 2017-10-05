@@ -34,9 +34,9 @@ function barChart() {
 
 
       xScale.rangeRound([0, innerWidth])
-        .domain(data.map(function(d) { return d.letter; }));
+        .domain(data.map(function(d) { return xValue(d); }));
       yScale.rangeRound([innerHeight, 0])
-        .domain([0, d3.max(data, function(d) { return d.frequency; })]);
+        .domain([0, d3.max(data, function(d) { return yValue(d); })]);
 
       g.select(".x.axis")
           .attr("transform", "translate(0," + innerHeight + ")")
