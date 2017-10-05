@@ -9,7 +9,7 @@ function scatterPlot() {
     innerHeight = height - margin.top - margin.bottom,
     xValue = function(d) { return d[0]; },
     yValue = function(d) { return d[1]; },
-    xScale = d3.scaleBand().padding(0.1),
+    xScale = d3.scaleLinear(),
     yScale = d3.scaleLinear();
 
   function chart(selection) {
@@ -34,9 +34,9 @@ function scatterPlot() {
 
 
       xScale.rangeRound([0, innerWidth])
-        .domain(data.map(function(d) { return d.letter; }));
+        .domain(data.map(function(d) { return xValue(d); }));
       yScale.rangeRound([innerHeight, 0])
-        .domain([0, d3.max(data, function(d) { return d.frequency; })]);
+        .domain([0, d3.max(data, function(d) { return yValue(d); })]);
 
       g.select(".x.axis")
           .attr("transform", "translate(0," + innerHeight + ")")
