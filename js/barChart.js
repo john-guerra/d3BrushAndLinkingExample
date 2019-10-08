@@ -11,8 +11,10 @@ function barChart() {
     yValue = function(d) { return d[1]; },
     xScale = d3.scaleBand().padding(0.1),
     yScale = d3.scaleLinear(),
+    clickedItems = {},
     onMouseOver = function () { },
-    onMouseOut = function () { };
+    onMouseOut = function () { },
+    onClick = function () { };
 
   function chart(selection) {
     selection.each(function (data) {
@@ -61,13 +63,15 @@ function barChart() {
 
       bars.enter().append("rect")
           .attr("class", "bar")
-        .merge(bars)
+          .merge(bars)
           .attr("x", X)
           .attr("y", Y)
+          .attr("fill-opacity", function(d) { return (d.key in clickedItems) ? "1.0" : ((Object.keys(clickedItems).length > 0) ? ".3" : "1.0")})
           .attr("width", xScale.bandwidth())
           .attr("height", function(d) { return innerHeight - Y(d); })
           .on("mouseover", onMouseOver)
-          .on("mouseout", onMouseOut);
+          .on("mouseout", onMouseOut)
+          .on("click", clicked);
 
       bars.exit().remove();
     });
@@ -82,6 +86,18 @@ function barChart() {
   // The y-accessor for the path generator; yScale ∘ yValue.
   function Y(d) {
     return yScale(yValue(d));
+  }
+
+  function clicked(d) {
+      if ( d.key in clickedItems ) {
+        delete clickedItems[d.key];
+      }
+      else {
+          clickedItems[d.key] = true;
+      }
+      console.log(clickedItems);
+      // onClick(Object.keys(clickedItems));
+      onClick(clickedItems);
   }
 
   chart.margin = function(_) {
@@ -123,6 +139,11 @@ function barChart() {
   chart.onMouseOut = function(_) {
     if (!arguments.length) return onMouseOut;
     onMouseOut = _;
+    return chart;
+  };
+  chart.onClick = function(_) {
+    if (!arguments.length) return onClick;
+    onClick = _;
     return chart;
   };
 
