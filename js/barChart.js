@@ -95,8 +95,6 @@ function barChart() {
       else {
           clickedItems[d.key] = true;
       }
-      console.log(clickedItems);
-      // onClick(Object.keys(clickedItems));
       onClick(clickedItems);
   }
 
