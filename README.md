@@ -122,7 +122,7 @@ Finally, you will need a brushed function that is going to get called everytime 
 
     onBrushed(selection);
   }
-```  
+```
 
 As you can see the d3.event.selection contains the range selected by the brush (in pixels), and with the xScale.invert we are transforming that selection into the time domain
 
