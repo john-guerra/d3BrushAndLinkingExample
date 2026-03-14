@@ -36,18 +36,14 @@ d3.csv("data/Lekagul_slice.csv",
     csData.carTypes = csData.dimCarType.group();
     csData.gateNames = csData.dimGateName.group();
 
-
     chartTimeline.onBrushed(function (selected) {
       csData.dimTime.filter(selected);
       update();
     });
 
-    barChartCar.onMouseOver(function (d) {
-      csData.dimCarType.filter(d.key);
-      update();
-    }).onMouseOut(function () {
-      // Clear the filter
-      csData.dimCarType.filterAll();
+
+    barChartCar.onClick(function (d) {
+      Object.keys(d).length > 0 ? csData.dimCarType.filterFunction(function(x) { return x in d; }) : csData.dimCarType.filterAll();
       update();
     });
 
